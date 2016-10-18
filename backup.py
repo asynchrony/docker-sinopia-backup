@@ -14,7 +14,7 @@ while True:
           cmd.append("--include")
           cmd.append("cache/" + package + "/*")
   except IOError as e:
-        print os.path.join(src, "cache/.sinopia-db.json") + " could not be found"
+        print os.path.join(src, "cache/.sinopia-db.json") + " could not be found. Other files were still synced."
       
   code = subprocess.call(cmd)
   if code:
