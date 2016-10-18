@@ -6,13 +6,13 @@ interval = float(os.environ['BACKUP_INTERVAL'])
 
 while True:
   cmd = ["aws", "s3", "sync", src, dest, "--delete", "--exclude", "cache/*/*"]
-
-  with open(os.path.join(src, "cache/.sinopia-db.json")) as data_file:
-    data = json.load(data_file)
-
-  for package in data["list"]:
-    cmd.append("--include")
-    cmd.append("cache/" + package + "/*")
+  
+  if os.path.isfile(os.path.join(src, "cache/.sinopia-db.json")):
+    with open(os.path.join(src, "cache/.sinopia-db.json")) as data_file:
+      data = json.load(data_file)
+    for package in data["list"]:
+      cmd.append("--include")
+      cmd.append("cache/" + package + "/*")
 
   code = subprocess.call(cmd)
   if code:
